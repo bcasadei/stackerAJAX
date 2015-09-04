@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
 	<title>Stack Overflow AJAX Demo</title>
 	<link rel="stylesheet" href="main.css">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="app.js"></script>
+    <script src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/app.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -46,6 +46,17 @@
 				<dd class="viewed"></dd>
 			<dt>Asker</dt>
 				<dd class="asker"></dd>
+		</dl>
+		<!-- top answerer template -->
+		<dl class="result answerer">
+			<dt>Name</dt>
+				<dd class="user-name"><a href="" target="_blank"></a></dd>
+			<dt>Reputation</dt>
+				<dd class="reputation"></dd>
+			<dt>User Type</dt>
+				<dd class="user-type"></dd>
+			<dt>Score for search term</dt>
+				<dd class="score"></dd>
 		</dl>
 		<div class="error">
 			<p>Uh-oh! Something went wrong with your request. Here's what we know:</p>

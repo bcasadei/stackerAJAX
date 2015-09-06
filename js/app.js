@@ -48,6 +48,33 @@ var showQuestion = function(question) {
 	return result;
 };
 
+// this function takes the question object returned by StackOverflow 
+// and creates new result to be appended to DOM
+var showAnswerer = function(answerers) {
+	
+	// clone our result template code
+	var result = $('.templates .answerer').clone();
+	
+	// Set the answerer properties in result
+	var answererElem = result.find('.user-name a');
+	answererElem.attr('href', answerers.user.link);
+	answererElem.text(answerers.user.display_name);
+
+	// set the reputation property in result
+	var reputation = result.find('.reputation');
+	reputation.text(answerers.user.reputation);
+
+	// set the user type property in result
+	var usertype = result.find('.user-type');
+	usertype.text(answerers.user.user_type);
+
+	// set some properties related to users score for the tag
+	var score = result.find('.score');
+	score.html(answerers.score);
+
+	return result;
+};
+
 
 // this function takes the results object from StackOverflow
 // and creates info about search results to be appended to DOM
@@ -97,52 +124,25 @@ var getUnanswered = function(tags) {
 };
 ////////////Get Top Answerers
 
-// this function takes the question object returned by StackOverflow 
-// and creates new result to be appended to DOM
-var showAnswerer = function(answerers) {
-	
-	// clone our result template code
-	var result = $('.templates .answerer').clone();
-	
-	// Set the answerer properties in result
-	var answererElem = result.find('.user-name a');
-	answererElem.attr('href', answerers.user.link);
-	answererElem.text(answerers.user.display_name);
 
-	// set the reputation property in result
-	var reputation = result.find('.reputation');
-	reputation.text(answerers.user.reputation);
-
-	// set the user type property in result
-	var usertype = result.find('.user-type');
-	usertype.text(answerers.user.user_type);
-
-	// set some properties related to users score for the tag
-	var score = result.find('.score');
-	score.html(atag + ':' + answerers.score);
-
-	return result;
-};
 
 // takes a tag to be searched for on Stackoverflow
 var getTopanswerers = function(tag) {
 	console.log(tag);
 	// the parameters we need to pass in our request to StackOverflow's API
 	var request = {
-		tagged: tag,
-		period: 'all-time',
 		site: 'stackoverflow',
 		};
-	
 	var result = $.ajax({
-		url: "http://api.stackexchange.com/2.2/tags/{tagged}/top-answerers",
+		url: 'http://api.stackexchange.com/2.2/tags/'+tag+'/top-answerers/all_time',
 		data: request,
 		dataType: "jsonp",
 		type: "GET",
 		})
 
 	.done(function(result){
-		var searchResults = showSearchResults(request.tagged, result.items.length);
+		console.log(result);
+		var searchResults = showSearchResults(tag, result.items.length);
 
 		$('.search-results').html(searchResults);
 
